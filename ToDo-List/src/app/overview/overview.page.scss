@@ -1,0 +1,19 @@
+.checkbox{
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+// smiley
+.smiley {
+    margin-bottom: 10px;
+}
+
+.fixed-smiley {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: white;
+    // background: var(--ion-background-color);
+  }
+
+// smiley tot hier
