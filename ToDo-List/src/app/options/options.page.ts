@@ -56,19 +56,19 @@ export class Options implements OnInit {
 
   async saveFile() {
     if (!this.fileName) {
-      // You might want to add a toast or alert here
       return;
     }
-    
-    try {
-      await this.fileService.writeFile(this.taakService.getTaken(), this.fileName);
-      // this.isSaveModalOpen = false;
-      this.cancel();
-      this.fileName = '';
-      // this.router.navigate(['/tab/overview']);
-    } catch (error) {
-      console.error('Error saving file:', error);
-    }
+    const content = this.taakService.getTaken();
+    window.api.AddFile(this.fileName, content);    
+    // try {
+    //   await this.fileService.writeFile(this.taakService.getTaken(), this.fileName);
+    //   // this.isSaveModalOpen = false;
+    //   this.cancel();
+    //   this.fileName = '';
+    //   // this.router.navigate(['/tab/overview']);
+    // } catch (error) {
+    //   console.error('Error saving file:', error);
+    // }
   }
 
   async saveExistingFile(selectedFile: string) {    
