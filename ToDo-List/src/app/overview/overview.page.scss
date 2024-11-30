@@ -13,6 +13,9 @@
     top: 0;
     z-index: 1000;
     background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     // background: var(--ion-background-color);
   }
 

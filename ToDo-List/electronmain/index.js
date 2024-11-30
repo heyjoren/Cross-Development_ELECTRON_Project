@@ -57,7 +57,6 @@ ipcMain.on('AddFile', (event, fileName, content) => {
         }
 
         console.log("filePath: " + filePath);
-        // const filePath = path.join(app.getPath('documents'), fileName + '.json');
         fs.writeFileSync(filePath, JSON.stringify(content), 'utf-8');
         console.log(`File saved: ${filePath}`);
     }
