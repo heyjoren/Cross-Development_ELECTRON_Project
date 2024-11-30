@@ -18,7 +18,9 @@ contextBridge.exposeInMainWorld(
     // },
     AddFile: (fileName, content) => {
         ipcRenderer.send('AddFile', fileName, content);
-    }
+    },
+    
+    getFiles: () => ipcRenderer.invoke('get-files')
 }
 );
 

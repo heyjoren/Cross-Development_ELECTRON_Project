@@ -34,8 +34,8 @@ export class Options implements OnInit {
   }
 
   async loadFileList() {
-    const fileInfos = await this.fileService.listFiles();
-    this.files = fileInfos.map(fileInfo => fileInfo.name);
+    const files = await window.api.getFiles();
+    this.files = files;
   }
 
   presentSaveModal() {
@@ -60,25 +60,13 @@ export class Options implements OnInit {
     }
     const content = this.taakService.getTaken();
     window.api.AddFile(this.fileName, content);    
-    // try {
-    //   await this.fileService.writeFile(this.taakService.getTaken(), this.fileName);
-    //   // this.isSaveModalOpen = false;
-    //   this.cancel();
-    //   this.fileName = '';
-    //   // this.router.navigate(['/tab/overview']);
-    // } catch (error) {
-    //   console.error('Error saving file:', error);
-    // }
   }
 
   async saveExistingFile(selectedFile: string) {    
     try {
       await this.fileService.writeFile(this.taakService.getTaken(), selectedFile);
-      // this.isSaveModalOpen = false;
       this.cancel();
       selectedFile = '';
-      // this.router.navigate(['/tab/overview']);
-      // this.navCtrl.navigateRoot('/tab/overview');
     } catch (error) {
       console.error('Error saving file:', error);
     }

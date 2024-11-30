@@ -64,3 +64,10 @@ ipcMain.on('AddFile', (event, fileName, content) => {
         console.error('Error saving file:', error);
     }
 })
+
+ipcMain.handle('get-files', async () => {
+    const todoListPath = path.join(app.getPath('documents'), 'ToDo_List');
+    const files = fs.readdirSync(todoListPath);
+    return files.filter(file => file.endsWith('.json'));
+});
+

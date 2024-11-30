@@ -11,6 +11,8 @@ interface Window {
 
 
         AddFile: (fileName: string, content: any) => void;
+
+        getFiles: () => Promise<string[]>;
     };
     }
     
