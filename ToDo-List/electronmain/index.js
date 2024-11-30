@@ -41,9 +41,23 @@ if (process.platform !== 'darwin') app.quit()
     // console.log("content: " + content);
 
 ipcMain.on('AddFile', (event, fileName, content) => {
+    const todoListPath = path.join(app.getPath('documents'), 'ToDo_List');
+    var filePath;
+    
     try {
-        console.log("path: " + app.getPath('documents'));
-        const filePath = path.join(app.getPath('documents'), fileName + '.json');
+        if(fs.existsSync(todoListPath))
+        {
+            filePath = path.join(todoListPath, fileName + '.json');
+
+        }
+        else
+        {
+            fs.mkdirSync(todoListPath, { recursive: true });
+            filePath = path.join(todoListPath, fileName + '.json');
+        }
+
+        console.log("filePath: " + filePath);
+        // const filePath = path.join(app.getPath('documents'), fileName + '.json');
         fs.writeFileSync(filePath, JSON.stringify(content), 'utf-8');
         console.log(`File saved: ${filePath}`);
     }
