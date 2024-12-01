@@ -60,11 +60,12 @@ export class Options implements OnInit {
     }
     const content = this.taakService.getTaken();
     window.api.AddFile(this.fileName, content);    
+    this.cancel();
+    this.fileName = '';
   }
 
   async saveExistingFile(selectedFile: string) {    
     try {
-      // await this.fileService.writeFile(this.taakService.getTaken(), selectedFile);
       const content = this.taakService.getTaken();
       window.api.AddFile(selectedFile, content);    
 
