@@ -64,7 +64,10 @@ export class Options implements OnInit {
 
   async saveExistingFile(selectedFile: string) {    
     try {
-      await this.fileService.writeFile(this.taakService.getTaken(), selectedFile);
+      // await this.fileService.writeFile(this.taakService.getTaken(), selectedFile);
+      const content = this.taakService.getTaken();
+      window.api.AddFile(selectedFile, content);    
+
       this.cancel();
       selectedFile = '';
     } catch (error) {
@@ -76,12 +79,6 @@ export class Options implements OnInit {
     try {
       // const data = await this.fileService.readFile(selectedFile);
       const data = await window.api.readFile(selectedFile);
-
-      console.log("LoadFile");
-      console.log("data: " + data);
-      console.log("data.content: " + data.content);
-      console.log("data.success: " + data.success);
-      console.log("data.error: " + data.error);
       if(data.error)
       {
         throw new Error(data.error)
@@ -91,7 +88,6 @@ export class Options implements OnInit {
       if (Array.isArray(data.content) && data.content.every(item => 'toDo' in item && 'done' in item)) {
         // Add tasks to TaskService
         data.content.forEach(task => {
-          console.log("task: " + task);
           this.taakService.SetTaak(task);
         });
         this.taakService.setSmileyHumeur();

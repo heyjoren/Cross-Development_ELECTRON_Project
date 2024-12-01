@@ -33,34 +33,28 @@ app.on('window-all-closed', () => {
 if (process.platform !== 'darwin') app.quit()
 })
 
-// ipcMain.on('AddFile', (event, arg) => {
-//     console.log("arg: " + arg);
-//     console.log("fileName: " + arg.fileName);
-//     console.log("content: " + arg.content);
-
-// ipcMain.on('AddFile', (event, {fileName, content}) => {
-    // console.log("fileName: " + fileName);
-    // console.log("content: " + content);
-
 ipcMain.on('AddFile', (event, fileName, content) => {
     const todoListPath = path.join(app.getPath('documents'), 'ToDo_List');
     var filePath;
     
     try {
+
+        if (!fileName.endsWith('.json'))
+        {
+            fileName += '.json'
+        }
+
         if(fs.existsSync(todoListPath))
         {
-            filePath = path.join(todoListPath, fileName + '.json');
-
+            filePath = path.join(todoListPath, fileName);
         }
         else
         {
             fs.mkdirSync(todoListPath, { recursive: true });
-            filePath = path.join(todoListPath, fileName + '.json');
+            filePath = path.join(todoListPath, fileName);
         }
 
-        console.log("filePath: " + filePath);
         fs.writeFileSync(filePath, JSON.stringify(content), 'utf-8');
-        console.log(`File saved: ${filePath}`);
     }
     catch (error) {
         console.error('Error saving file:', error);
