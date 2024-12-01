@@ -20,7 +20,9 @@ contextBridge.exposeInMainWorld(
         ipcRenderer.send('AddFile', fileName, content);
     },
     
-    getFiles: () => ipcRenderer.invoke('get-files')
+    getFiles: () => ipcRenderer.invoke('get-files'),
+
+    readFile: (fileName) => ipcRenderer.invoke('read-file', fileName),
 }
 );
 

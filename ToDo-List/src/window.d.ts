@@ -13,6 +13,12 @@ interface Window {
         AddFile: (fileName: string, content: any) => void;
 
         getFiles: () => Promise<string[]>;
+
+        readFile: (fileName: string) => Promise<{
+            content: any;
+            success: boolean;
+            error?: string;
+        }>;
     };
     }
     

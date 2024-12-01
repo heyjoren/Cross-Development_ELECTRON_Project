@@ -71,3 +71,23 @@ ipcMain.handle('get-files', async () => {
     return files.filter(file => file.endsWith('.json'));
 });
 
+ipcMain.handle('read-file', async (event, fileName) => {   
+    const todoListPath = path.join(app.getPath('documents'), 'ToDo_List');
+    const filePath = path.join(todoListPath, fileName);
+    
+    try {
+        const fileContent = fs.readFileSync(filePath, 'utf-8');
+        const parsedContent = JSON.parse(fileContent);
+        return {
+            content: parsedContent,
+            success: true
+        };
+    } catch (error) {
+        return {
+            content: null,
+            success: false,
+            error: error.message
+        };
+    }
+});
+

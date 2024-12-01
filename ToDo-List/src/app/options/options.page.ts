@@ -74,12 +74,24 @@ export class Options implements OnInit {
 
   async loadFile(selectedFile: string) {
     try {
-      const data = await this.fileService.readFile(selectedFile);
+      // const data = await this.fileService.readFile(selectedFile);
+      const data = await window.api.readFile(selectedFile);
+
+      console.log("LoadFile");
+      console.log("data: " + data);
+      console.log("data.content: " + data.content);
+      console.log("data.success: " + data.success);
+      console.log("data.error: " + data.error);
+      if(data.error)
+      {
+        throw new Error(data.error)
+      }
       
       // Validate if data is in correct format (array of Taak objects)
-      if (Array.isArray(data) && data.every(item => 'toDo' in item && 'done' in item)) {
+      if (Array.isArray(data.content) && data.content.every(item => 'toDo' in item && 'done' in item)) {
         // Add tasks to TaskService
-        data.forEach(task => {
+        data.content.forEach(task => {
+          console.log("task: " + task);
           this.taakService.SetTaak(task);
         });
         this.taakService.setSmileyHumeur();
@@ -88,7 +100,8 @@ export class Options implements OnInit {
         throw new Error('Invalid file format');
       }
     } catch (error) {
-      // Show error message to user
+      // Show error message to user.
+      console.log("error: " + error);
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Could not load file. Invalid format.',
