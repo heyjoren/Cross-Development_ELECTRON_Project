@@ -10,7 +10,7 @@ interface Window {
         getElectronVersion: () => string;
 
 
-        AddFile: (fileName: string, content: any) => void;
+        writeFiles: (fileName: string, content: any) => void;
 
         getFiles: () => Promise<string[]>;
 

@@ -59,7 +59,7 @@ export class Options implements OnInit {
       return;
     }
     const content = this.taakService.getTaken();
-    window.api.AddFile(this.fileName, content);    
+    window.api.writeFiles(this.fileName, content);    
     this.cancel();
     this.fileName = '';
   }
@@ -67,7 +67,7 @@ export class Options implements OnInit {
   async saveExistingFile(selectedFile: string) {    
     try {
       const content = this.taakService.getTaken();
-      window.api.AddFile(selectedFile, content);    
+      window.api.writeFiles(selectedFile, content);    
 
       this.cancel();
       selectedFile = '';

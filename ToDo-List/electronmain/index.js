@@ -33,7 +33,7 @@ app.on('window-all-closed', () => {
 if (process.platform !== 'darwin') app.quit()
 })
 
-ipcMain.on('AddFile', (event, fileName, content) => {
+ipcMain.on('write-files', (event, fileName, content) => {
     const todoListPath = path.join(app.getPath('documents'), 'ToDo_List');
     var filePath;
     
