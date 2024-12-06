@@ -20,7 +20,7 @@ const routes: Routes = [
         loadChildren: () => import('../options/options.module').then(m => m.OptionsPageModule)
       },
       {
-        path: '',
+        path: '**',
         redirectTo: '/tab/overview',
         pathMatch: 'full'
       }

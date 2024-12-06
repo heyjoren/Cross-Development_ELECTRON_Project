@@ -36,5 +36,6 @@ export class AddTaskPage implements OnInit {
       this.taakService.setSmileyHumeur();
 
     }
+
   }
 }

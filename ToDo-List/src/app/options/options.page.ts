@@ -34,8 +34,8 @@ export class Options implements OnInit {
   }
 
   async loadFileList() {
-    const fileInfos = await this.fileService.listFiles();
-    this.files = fileInfos.map(fileInfo => fileInfo.name);
+    const files = await window.api.getFiles();
+    this.files = files;
   }
 
   presentSaveModal() {
@@ -56,29 +56,21 @@ export class Options implements OnInit {
 
   async saveFile() {
     if (!this.fileName) {
-      // You might want to add a toast or alert here
       return;
     }
-    
-    try {
-      await this.fileService.writeFile(this.taakService.getTaken(), this.fileName);
-      // this.isSaveModalOpen = false;
-      this.cancel();
-      this.fileName = '';
-      // this.router.navigate(['/tab/overview']);
-    } catch (error) {
-      console.error('Error saving file:', error);
-    }
+    const content = this.taakService.getTaken();
+    window.api.writeFiles(this.fileName, content);    
+    this.cancel();
+    this.fileName = '';
   }
 
   async saveExistingFile(selectedFile: string) {    
     try {
-      await this.fileService.writeFile(this.taakService.getTaken(), selectedFile);
-      // this.isSaveModalOpen = false;
+      const content = this.taakService.getTaken();
+      window.api.writeFiles(selectedFile, content);    
+
       this.cancel();
       selectedFile = '';
-      // this.router.navigate(['/tab/overview']);
-      // this.navCtrl.navigateRoot('/tab/overview');
     } catch (error) {
       console.error('Error saving file:', error);
     }
@@ -86,12 +78,17 @@ export class Options implements OnInit {
 
   async loadFile(selectedFile: string) {
     try {
-      const data = await this.fileService.readFile(selectedFile);
+      // const data = await this.fileService.readFile(selectedFile);
+      const data = await window.api.readFile(selectedFile);
+      if(data.error)
+      {
+        throw new Error(data.error)
+      }
       
       // Validate if data is in correct format (array of Taak objects)
-      if (Array.isArray(data) && data.every(item => 'toDo' in item && 'done' in item)) {
+      if (Array.isArray(data.content) && data.content.every(item => 'toDo' in item && 'done' in item)) {
         // Add tasks to TaskService
-        data.forEach(task => {
+        data.content.forEach(task => {
           this.taakService.SetTaak(task);
         });
         this.taakService.setSmileyHumeur();
@@ -100,7 +97,8 @@ export class Options implements OnInit {
         throw new Error('Invalid file format');
       }
     } catch (error) {
-      // Show error message to user
+      // Show error message to user.
+      console.log("error: " + error);
       const alert = await this.alertController.create({
         header: 'Error',
         message: 'Could not load file. Invalid format.',
