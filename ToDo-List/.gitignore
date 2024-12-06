@@ -70,3 +70,15 @@ testem.log
 Thumbs.db
 
 resources/android/**/*
+
+
+
+# Electron Forge intermediate files
+temp-electron-packager/
+
+# Installers en distributiebestanden
+*.exe
+*.dmg
+*.zip
+*.rpm
+*.deb
