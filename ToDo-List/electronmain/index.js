@@ -20,6 +20,7 @@ const createWindow = () => {
             allowRunningInsecureContent: false,
             experimentalFeatures: false,
             remote: false,
+            show: false,
         },
         title: "ToDoList",
         // icon: __dirname + "/resources/icon.png"
@@ -53,6 +54,13 @@ const createWindow = () => {
 
     // and load the index.html of the app.
     mainWindow.loadFile('../www/index.html')
+
+    //show only without white screen
+    mainWindow.webContents.on('did-finish-load', function() {
+        mainWindow.show()
+        mainWindow.focus()
+    })
+    
 }
 
 const isMac = process.platform ==='darwin';
@@ -104,6 +112,7 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
 })
 })
+
 
 app.on('window-all-closed', () => {
 if (process.platform !== 'darwin') app.quit()
