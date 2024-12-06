@@ -82,3 +82,16 @@ temp-electron-packager/
 *.zip
 *.rpm
 *.deb
+
+
+# Build output
+out/
+dist/
+build/
+
+# Electron distributiebestanden
+*.exe
+*.nupkg
+*.zip
+*.dmg
+
