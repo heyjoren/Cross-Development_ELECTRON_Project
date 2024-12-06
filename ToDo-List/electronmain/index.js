@@ -4,6 +4,8 @@ const path = require('path')
 const os = require('os')
 const fs = require('fs');
 
+if(require('electron-squirrel-startup')) return app.quit
+
 const createWindow = () => {
 // Create the browser window.
     const mainWindow = new BrowserWindow({
@@ -53,7 +55,7 @@ const createWindow = () => {
     })
 
     // and load the index.html of the app.
-    mainWindow.loadFile('../www/index.html')
+    mainWindow.loadFile('./www/index.html')
 
     //show only without white screen
     mainWindow.webContents.on('did-finish-load', function() {
