@@ -6,19 +6,46 @@ const fs = require('fs');
 
 const createWindow = () => {
 // Create the browser window.
-const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    minWidth: 400,
-    minHeight: 500,
-    webPreferences: {
-        contextIsolation: true,
-        preload: path.join(__dirname, 'preload.js')
-    }
-})
+    const mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        minWidth: 400,
+        minHeight: 500,
+        webPreferences: {
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js'),
+            nodeIntegration: false,
+            sandbox: true,
+            webSecurity: true,
+            allowRunningInsecureContent: false,
+            experimentalFeatures: false,
+            remote: false,
+        }
+    })
 
-// and load the index.html of the app.
-mainWindow.loadFile('../www/index.html')
+    // Add permission handler
+    mainWindow.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
+        // Define which permissions to allow/deny
+        const allowedPermissions = ['media', 'geolocation'] 
+        callback(allowedPermissions.includes(permission))
+    })
+
+    // Prevent navigation to external URLs
+    mainWindow.webContents.on('will-navigate', (event, url) => {
+        const allowedOrigin = 'file://'
+        if (!url.startsWith(allowedOrigin)) {
+            event.preventDefault()
+            console.log('Navigation blocked:', url)
+        }
+    })
+
+    // Prevent creating new windows
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        return { action: 'deny' }
+    })
+
+    // and load the index.html of the app.
+    mainWindow.loadFile('../www/index.html')
 }
 
 app.whenReady().then(() => {
