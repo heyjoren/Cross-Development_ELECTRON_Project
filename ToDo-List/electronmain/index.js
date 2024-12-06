@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu } = require('electron')
 const path = require('path')
 const os = require('os')
 const fs = require('fs');
@@ -20,7 +20,14 @@ const createWindow = () => {
             allowRunningInsecureContent: false,
             experimentalFeatures: false,
             remote: false,
-        }
+        },
+        title: "ToDoList",
+        // icon: __dirname + "/resources/icon.png"
+        icon: path.join(__dirname, "/resources/",
+            os.platform() === "win32" ? "icon.ico" : 
+            os.platform() === "darwin" ? 'icon.icns' :
+            "icon.png"
+        )
     })
 
     // Add permission handler
@@ -47,6 +54,48 @@ const createWindow = () => {
     // and load the index.html of the app.
     mainWindow.loadFile('../www/index.html')
 }
+
+const isMac = process.platform ==='darwin';
+
+const template = [
+    ...(isMac ? [{
+        label: app.name,
+        submenu: [
+            { role: 'about' },
+            { type: 'separator' },
+            { role: 'services' },
+            { type: 'separator' },
+            { role: 'hide' },
+            { role: 'hideOthers' },
+            { role: 'unhide' },
+            { type: 'separator' },
+            { role: 'quit' }
+        ]
+    }] : []),
+    
+    {
+        label: 'File',
+        submenu: [
+            isMac ? {role: 'close'} : {role: 'quit'}
+        ]
+    },
+
+    {
+        label: 'Edit',
+        submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { type: 'separator' },
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' }
+        ]
+    },
+
+]
+
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
 
 app.whenReady().then(() => {
 createWindow()
