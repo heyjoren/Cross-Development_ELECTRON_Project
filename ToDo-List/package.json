@@ -14,13 +14,16 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "ToDoList"
+            "name": "ToDoList",
+            "loadingGif": "./resources/smiley.gif"
           }
         },
         {
           "name": "@electron-forge/maker-zip",
           "platforms": [
-            "darwin"
+            "darwin",
+            "win32",
+            "linux"
           ]
         }
       ]
