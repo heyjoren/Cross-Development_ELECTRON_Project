@@ -36,7 +36,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "run": "ionic cap copy && electron.",
+    "run": "ionic cap copy && electron .",
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
