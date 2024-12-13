@@ -35,3 +35,18 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+
+
+
+/**
+*   de css 
+*/
+body {
+    -webkit-user-select: none;
+  }
+  
+  // Allow text selection only in inputs and textareas
+  input, textarea {
+    -webkit-user-select: text;
+  }
