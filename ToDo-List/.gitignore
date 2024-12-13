@@ -79,7 +79,7 @@ temp-electron-packager/
 # Installers en distributiebestanden
 *.exe
 *.dmg
-*.zip
+#*.zip
 *.rpm
 *.deb
 
@@ -92,6 +92,5 @@ build/
 # Electron distributiebestanden
 *.exe
 *.nupkg
-*.zip
+#*.zip
 *.dmg
-
